@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111a2f">
+    <meta name="description" content="A local-first checklist and milestone ledger for checking remote work offers and tracking the path from selection to a first paid task.">
+    <title>TaskLatch — Is the task actually assigned?</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./src/app.mjs"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#overview" aria-label="TaskLatch home"><span class="brand-mark">TL</span><span><strong>TaskLatch</strong><small>work-readiness desk</small></span></a>
+        <div class="sidebar-label">WORKSPACE</div>
+        <nav class="nav-list">
+          <button class="nav-item is-active" data-view="overview"><span class="nav-icon">01</span> Overview</button>
+          <button class="nav-item" data-view="opportunities"><span class="nav-icon">02</span> Opportunities <span class="nav-count" id="nav-count">5</span></button>
+          <button class="nav-item" data-view="offer-check"><span class="nav-icon">03</span> Offer check</button>
+          <button class="nav-item" data-view="work-trail"><span class="nav-icon">04</span> Work trail</button>
+          <button class="nav-item" data-view="export"><span class="nav-icon">05</span> Export & privacy</button>
+        </nav>
+        <div class="sidebar-spacer"></div>
+        <div class="privacy-card"><span class="privacy-dot"></span><div><strong>Private by default</strong><small>Your records stay in this browser.</small></div></div>
+        <div class="sidebar-foot">TASKLATCH · PERSONAL DEMO<br>All sample records are fictional.</div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <div class="breadcrumb"><span>Workspace</span><span class="crumb-sep">/</span><strong id="top-title">Overview</strong></div>
+          <div class="top-actions"><span class="demo-pill"><i></i> SYNTHETIC DEMO</span><button class="quiet-button" id="reset-demo" type="button">Reset sample</button></div>
+        </header>
+        <div class="content" id="content" tabindex="-1"></div>
+        <footer class="app-footer"><span>Local-only demo · no login · no email access</span><span>Not a legitimacy guarantee, legal advice, or promise of paid work</span></footer>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

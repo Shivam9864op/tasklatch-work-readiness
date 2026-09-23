@@ -1,0 +1,14 @@
+{
+  "name": "tasklatch-work-readiness",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Local-first work-readiness checklist from offer to first paid task",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test",
+    "serve": "node scripts/serve.mjs",
+    "record": "node scripts/record-walkthrough.mjs",
+    "verify": "node scripts/verify-project.mjs"
+  }
+}
