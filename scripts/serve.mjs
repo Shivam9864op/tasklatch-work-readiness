@@ -10,6 +10,7 @@ const types = new Map([
   [".html", "text/html; charset=utf-8"], [".css", "text/css; charset=utf-8"],
   [".mjs", "text/javascript; charset=utf-8"], [".js", "text/javascript; charset=utf-8"],
   [".json", "application/json; charset=utf-8"], [".mp4", "video/mp4"], [".srt", "text/plain; charset=utf-8"],
+  [".vtt", "text/vtt; charset=utf-8"],
 ]);
 
 const server = createServer(async (request, response) => {
@@ -38,7 +39,7 @@ const server = createServer(async (request, response) => {
       "Cache-Control": "no-store",
       "X-Content-Type-Options": "nosniff",
       "Referrer-Policy": "no-referrer",
-      "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; media-src 'self'; img-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; media-src 'self'; img-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'",
     });
     if (request.method === "HEAD") response.end();
     else response.end(await readFile(candidate));

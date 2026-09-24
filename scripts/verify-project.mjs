@@ -5,6 +5,10 @@ import { fileURLToPath } from "node:url";
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const imageExtensions = new Set([".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".avif"]);
 const allowedMediaExtensions = new Set([".mp4", ".vtt", ".png"]);
+const allowedCoverPaths = new Set([
+  "media/tasklatch-quick-demo-cover.png",
+  "media/tasklatch-motion-promo-cover.png",
+]);
 const errors = [];
 
 async function walk(directory) {
@@ -16,7 +20,7 @@ async function walk(directory) {
     else {
       const ext = extname(entry.name).toLowerCase();
       const relativePath = path.slice(root.length + 1).replaceAll("\\", "/");
-      if (imageExtensions.has(ext) && relativePath !== "media/tasklatch-quick-demo-cover.png") errors.push("Unexpected image file: " + path);
+      if (imageExtensions.has(ext) && !allowedCoverPaths.has(relativePath)) errors.push("Unexpected image file: " + path);
       if (path.includes(`${join("media", "")}`) && !allowedMediaExtensions.has(ext)) errors.push(`Unexpected media file: ${path}`);
     }
   }
@@ -32,6 +36,24 @@ if (!html.includes("<video") && !app.includes("<video") && !app.includes("video-
 const quickDemoHtml = await readFile(join(root, "quick-demo.html"), "utf8");
 const quickDemoPage = await readFile(join(root, "src", "quick-demo-page.mjs"), "utf8");
 if (!quickDemoHtml.includes("quick-demo.css") || !quickDemoPage.includes("assignQuickDemoTask")) errors.push("Interactive one-feature demo source is missing.");
+const motionHtml = await readFile(join(root, "motion-promo.html"), "utf8");
+const motionScript = await readFile(join(root, "src", "motion-promo.mjs"), "utf8");
+const motionCss = await readFile(join(root, "motion-promo.css"), "utf8");
+const motionRecorder = await readFile(join(root, "scripts", "record-motion-promo.mjs"), "utf8");
+if (!motionHtml.includes('src="./quick-demo.html?source=motion-film"') || !motionScript.includes('querySelector("#record-sample")')) {
+  errors.push("Motion promo must present and operate the working synthetic product demo.");
+}
+if (!motionScript.includes('"Task assigned"') || !motionRecorder.includes('"Not recorded"') || !motionCss.includes(".payment-spotlight")) {
+  errors.push("Motion promo must distinguish a recorded task from unrecorded payment.");
+}
+for (const file of ["tasklatch-motion-promo.mp4", "tasklatch-motion-promo.en.vtt", "tasklatch-motion-promo-cover.png"]) {
+  try {
+    const info = await stat(join(root, "media", file));
+    if (info.size < 100) errors.push("Motion-promo asset is unexpectedly small: " + file);
+  } catch {
+    errors.push("Motion-promo asset is missing: " + file);
+  }
+}
 const serverSource = await readFile(join(root, "scripts", "serve.mjs"), "utf8");
 if (!serverSource.includes("img-src 'none'")) errors.push("Static server must disallow images by policy.");
 const packageFile = JSON.parse(await readFile(join(root, "package.json"), "utf8"));

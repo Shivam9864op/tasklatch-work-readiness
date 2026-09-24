@@ -20,6 +20,14 @@ The quick demo focuses on one distinction: onboarding is not a task assignment, 
 
 ![TaskLatch real quick-demo screenshot · fictional sample · synthetic data](media/tasklatch-quick-demo-cover.png)
 
+## Motion-design product film
+
+[Watch the 36-second TaskLatch motion film](media/tasklatch-motion-promo.mp4) · [Open the HTML motion storyboard](motion-promo.html) · [Read the English captions](media/tasklatch-motion-promo.en.vtt)
+
+The film follows one idea rather than listing every feature: onboarding is not assignment, and assignment is not payment. It uses a designed motion-graphics opening and closing around the working interactive product demo. The sample task reference is triggered through the actual demo button, and the payment state remains unchanged. All names and records are fictional. The film is a personal motion concept, not client work.
+
+![TaskLatch motion-film cover · personal project · synthetic data](media/tasklatch-motion-promo-cover.png)
+
 **Personal open-source demo · Fictional sample records · Synthetic data · Not client work**
 
 ## What it does
@@ -66,7 +74,7 @@ node scripts/record-walkthrough.mjs
 
 The recording script uses a separate temporary browser profile, captures frames of the working local demo, encodes a subtitled MP4, and removes its temporary frames and profile. It never touches a signed-in browser session.
 
-Run node scripts/record-quick-demo.mjs to reproduce the short product clip, English captions, and cover screenshot from the working local demo.
+Run node scripts/record-quick-demo.mjs to reproduce the short product clip, English captions, and cover screenshot from the working local demo. Run node scripts/record-motion-promo.mjs to record the 36-second, 1920×1080 motion-design film and verify its product-state transitions.
 
 ## Privacy and limitations
 

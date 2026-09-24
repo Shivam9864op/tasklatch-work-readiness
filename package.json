@@ -10,6 +10,7 @@
     "serve": "node scripts/serve.mjs",
     "record": "node scripts/record-walkthrough.mjs",
     "record:quick": "node scripts/record-quick-demo.mjs",
+    "record:motion": "node scripts/record-motion-promo.mjs",
     "verify": "node scripts/verify-project.mjs"
   }
 }
