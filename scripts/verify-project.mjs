@@ -46,6 +46,9 @@ if (!motionHtml.includes('src="./quick-demo.html?source=motion-film"') || !motio
 if (!motionScript.includes('"Task assigned"') || !motionRecorder.includes('"Not recorded"') || !motionCss.includes(".payment-spotlight")) {
   errors.push("Motion promo must distinguish a recorded task from unrecorded payment.");
 }
+if (!motionRecorder.includes("const captureFps = 60") || !motionRecorder.includes("const outputFps = 60") || motionRecorder.includes("minterpolate=")) {
+  errors.push("Motion promo must capture and export actual animation frames at 60 fps without synthetic interpolation.");
+}
 for (const file of ["tasklatch-motion-promo.mp4", "tasklatch-motion-promo.en.vtt", "tasklatch-motion-promo-cover.png"]) {
   try {
     const info = await stat(join(root, "media", file));

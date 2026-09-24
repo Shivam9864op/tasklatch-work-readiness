@@ -10,7 +10,8 @@ const media = join(root, "media");
 const videoPath = join(media, "tasklatch-motion-promo.mp4");
 const captionsPath = join(media, "tasklatch-motion-promo.en.vtt");
 const coverPath = join(media, "tasklatch-motion-promo-cover.png");
-const fps = 15;
+const captureFps = 60;
+const outputFps = 60;
 const duration = 36;
 const cues = [
   [0, 5.5, "Onboarded does not mean assigned work."],
@@ -174,9 +175,9 @@ async function main() {
       return result.result.value;
     };
     const capture = async (seconds) => {
-      const count = Math.round(seconds * fps);
+      const count = Math.round(seconds * captureFps);
       for (let index = 0; index < count; index++) {
-        const timelineTime = frameIndex / fps;
+        const timelineTime = frameIndex / captureFps;
         await evaluate("window.__taskLatchMotion.seek(" + timelineTime.toFixed(3) + ")");
         const image = await send("Page.captureScreenshot", { format: "jpeg", quality: 91, fromSurface: true });
         await writeFile(join(frames, String(frameIndex++).padStart(6, "0") + ".jpg"), Buffer.from(image.data, "base64"));
@@ -229,7 +230,7 @@ async function main() {
     if (finalPayment !== "Not recorded" || finalBeat !== "5") {
       throw new Error("The closing scene must keep payment unrecorded and reach the brand card.");
     }
-    if (frameIndex !== fps * duration) throw new Error("Expected " + (fps * duration) + " video frames; captured " + frameIndex + ".");
+    if (frameIndex !== captureFps * duration) throw new Error("Expected " + (captureFps * duration) + " captured frames; captured " + frameIndex + ".");
 
     const vtt = "WEBVTT\n\n" + cues.map(([start, end, text], index) =>
       (index + 1) + "\n" + vttTime(start) + " --> " + vttTime(end) + "\n" + text
@@ -237,12 +238,14 @@ async function main() {
     await writeFile(captionsPath, vtt, "utf8");
     const encoder = spawn(ffmpeg, [
       "-hide_banner", "-loglevel", "error", "-y",
-      "-framerate", String(fps),
+      "-framerate", String(captureFps),
       "-i", join(frames, "%06d.jpg"),
-      "-vf", "scale=1920:1080:flags=lanczos,fps=24,format=yuv420p",
+      "-vf", "scale=1920:1080:in_range=pc:out_range=tv:flags=lanczos,format=yuv420p",
       "-c:v", "libx264",
+      "-pix_fmt", "yuv420p",
+      "-color_range", "tv",
       "-crf", "20",
-      "-preset", "medium",
+      "-preset", "fast",
       "-movflags", "+faststart",
       "-metadata", "title=TaskLatch — Onboarded is not assigned",
       "-metadata", "comment=Personal motion concept using a working synthetic-data product demo",
@@ -254,7 +257,7 @@ async function main() {
       encoder.once("exit", resolveExit);
     });
     if (exitCode !== 0) throw new Error("Motion-promo video encoding failed with exit code " + exitCode + ".");
-    process.stdout.write("Recorded " + frameIndex + " frames at " + fps + " fps and encoded a 36-second 1920x1080 motion film.\n");
+    process.stdout.write("Captured " + frameIndex + " rendered animation frames at " + captureFps + " fps and encoded the 1920x1080 film at " + outputFps + " fps.\n");
     process.stdout.write("Verified: the real demo starts onboarded, records DEMO-TASK-17, and leaves payment not recorded.\n");
     process.stdout.write("Saved " + videoPath + "\nSaved " + captionsPath + "\nSaved " + coverPath + "\n");
   } finally {
