@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111a2f">
+    <meta name="description" content="A short interactive TaskLatch demo showing why onboarding, task assignment, and payment are separate milestones.">
+    <title>TaskLatch — Onboarded is not the same as paid</title>
+    <link rel="stylesheet" href="./quick-demo.css">
+    <style>.assignment-note[hidden]{display:none!important}</style>
+    <script type="module" src="./src/quick-demo-page.mjs"></script>
+  </head>
+  <body class="quick-page">
+    <div class="quick-wrap">
+      <header class="quick-topbar">
+        <a class="quick-brand" href="./" aria-label="TaskLatch full workspace">
+          <span class="quick-brand-mark">TL</span>
+          <span><strong>TaskLatch</strong><small>work-readiness desk</small></span>
+        </a>
+        <div class="quick-top-actions">
+          <span class="sample-label"><span></span> PERSONAL DEMO · SYNTHETIC DATA</span>
+          <a class="workspace-link" href="./">Full workspace <span aria-hidden="true">↗</span></a>
+        </div>
+      </header>
+
+      <main>
+        <section class="quick-intro" aria-labelledby="quick-title">
+          <div>
+            <div class="quick-eyebrow">A 20-SECOND TASKLATCH DEMO</div>
+            <h1 id="quick-title">Onboarded.<br><span>Still no task assigned.</span></h1>
+            <p>See one work milestone change—and why TaskLatch still won’t call it paid.</p>
+          </div>
+          <div class="intro-mark" aria-hidden="true"><span>01</span><i></i><span>02</span></div>
+        </section>
+
+        <section class="workspace-card" aria-label="Interactive fictional TaskLatch workspace">
+          <aside class="demo-sidebar" aria-label="Demo navigation">
+            <div class="side-workspace"><span class="workspace-avatar">N</span><span><strong>Northstar sample</strong><small>Fictional workspace</small></span><span class="side-chevron">⌄</span></div>
+            <div class="side-label">WORKSPACE</div>
+            <div class="side-nav"><span class="side-icon">▦</span> Overview</div>
+            <div class="side-nav selected"><span class="side-icon">◷</span> Work trail <span class="side-count">1</span></div>
+            <div class="side-nav"><span class="side-icon">✓</span> Offer check</div>
+            <div class="side-nav"><span class="side-icon">⇩</span> Export</div>
+            <div class="sidebar-bottom"><span class="privacy-dot"></span><span><strong>Private by default</strong><small>Sample only · no sign-in</small></span></div>
+          </aside>
+
+          <div class="demo-main">
+            <div class="demo-toolbar">
+              <div class="demo-breadcrumb">Northstar sample <span>/</span> Work trail</div>
+              <div class="toolbar-right"><span class="local-pill">LOCAL SAMPLE</span><button id="reset-sample" class="reset-button" type="button">Reset</button></div>
+            </div>
+
+            <div class="record-heading">
+              <div>
+                <div class="record-overline">FICTIONAL OPPORTUNITY · HINDI AI RESPONSE REVIEWER</div>
+                <h2>Northstar AI Lab</h2>
+                <p>Remote · Hourly contract · Sample record only</p>
+              </div>
+              <span class="status-pill waiting" id="stage-pill"><i></i><span id="stage-pill-text">Onboarded · awaiting task</span></span>
+            </div>
+
+            <div class="milestone-panel">
+              <div class="milestone-head"><div><strong>Work milestones</strong><small>Each step needs its own evidence.</small></div><span class="milestone-count" id="milestone-count">5 of 6</span></div>
+              <ol class="milestone-track" id="milestone-track" aria-label="Work milestones"></ol>
+            </div>
+
+            <div class="detail-grid">
+              <article class="detail-card state-card">
+                <div class="card-kicker">CURRENT WORK STATUS</div>
+                <div class="state-symbol waiting-symbol" id="state-symbol" aria-hidden="true">…</div>
+                <h3 id="status-heading">Onboarded</h3>
+                <p id="status-description">No task assignment has been recorded yet.</p>
+                <div class="next-step"><span class="next-step-icon">→</span><span><small>NEXT CHECK</small><strong id="next-step">Ask whether a task is available</strong></span></div>
+              </article>
+
+              <article class="detail-card payment-card" aria-live="polite">
+                <div class="card-kicker">PAYMENT STATUS</div>
+                <div class="payment-amount" id="payment-label">Not recorded</div>
+                <p>Task assignment and payment are different milestones. Only record payment after it arrives.</p>
+                <div class="payment-foot"><span class="payment-dot"></span><span id="payment-detail">No payment evidence in this sample</span></div>
+              </article>
+            </div>
+
+            <div class="assignment-note" id="assignment-note" hidden>
+              <span class="assignment-check">✓</span>
+              <span><small>SYNTHETIC ASSIGNMENT REFERENCE</small><strong>DEMO-TASK-17</strong></span>
+              <span class="assignment-caption">Fictional sample</span>
+            </div>
+
+            <div class="demo-actions">
+              <button class="record-button" id="record-sample" type="button"><span id="record-label">Record sample task assignment</span><span aria-hidden="true">→</span></button>
+              <span class="action-hint" id="action-hint" aria-live="polite">This only changes the fictional sample in this page.</span>
+            </div>
+          </div>
+        </section>
+
+        <footer class="quick-footer">
+          <span>Personal open-source project · Not client work · No real employer or payment data</span>
+          <span>TaskLatch keeps the evidence separate; it cannot guarantee a task or payment.</span>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

@@ -12,7 +12,15 @@ Open the [TaskLatch demo](https://shivam9864op.github.io/tasklatch-work-readines
 
 [Watch the real 60-second walkthrough](media/tasklatch-walkthrough.mp4) · [Read the English captions](media/tasklatch-walkthrough.en.vtt)
 
-This project uses video as its only promotional media. It contains no screenshots, poster, generated cover, or image assets. The walkthrough is captured from the running app with synthetic data.
+## Focused product demo
+
+[Open the interactive one-feature demo](quick-demo.html) · [Watch the 20-second video](media/tasklatch-quick-demo.mp4) · [Read its captions](media/tasklatch-quick-demo.en.vtt)
+
+The quick demo focuses on one distinction: onboarding is not a task assignment, and assignment is not payment. Its HTML, CSS, state logic, tests, and video-recording script are included in this repository. The cover below is a direct screenshot of the working demo, not a generated product screen.
+
+![TaskLatch real quick-demo screenshot · fictional sample · synthetic data](media/tasklatch-quick-demo-cover.png)
+
+**Personal open-source demo · Fictional sample records · Synthetic data · Not client work**
 
 ## What it does
 
@@ -58,6 +66,8 @@ node scripts/record-walkthrough.mjs
 
 The recording script uses a separate temporary browser profile, captures frames of the working local demo, encodes a subtitled MP4, and removes its temporary frames and profile. It never touches a signed-in browser session.
 
+Run node scripts/record-quick-demo.mjs to reproduce the short product clip, English captions, and cover screenshot from the working local demo.
+
 ## Privacy and limitations
 
 - Records stay in browser storage unless the user explicitly downloads a backup. Import is size-limited and validated before it replaces current records.
@@ -69,7 +79,7 @@ The recording script uses a separate temporary browser profile, captures frames 
 
 ## Tests
 
-`node --test` covers milestone prerequisites, payment recording, red-flag states, rate differences, redaction, and malformed or oversized imports. `node scripts/verify-project.mjs` checks that the app contains no image files, image elements, external font calls, or image requests.
+The test suite covers milestone prerequisites, payment recording, red-flag states, rate differences, redaction, malformed or oversized imports, and the guided-demo state transition. The project verifier checks the demo source, bundled cover, video player, and absence of app image loads or external fonts.
 
 ## Feedback
 

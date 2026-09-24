@@ -9,6 +9,7 @@
     "test": "node --test",
     "serve": "node scripts/serve.mjs",
     "record": "node scripts/record-walkthrough.mjs",
+    "record:quick": "node scripts/record-quick-demo.mjs",
     "verify": "node scripts/verify-project.mjs"
   }
 }

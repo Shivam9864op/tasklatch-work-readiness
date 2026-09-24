@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const imageExtensions = new Set([".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".avif"]);
-const allowedMediaExtensions = new Set([".mp4", ".vtt"]);
+const allowedMediaExtensions = new Set([".mp4", ".vtt", ".png"]);
 const errors = [];
 
 async function walk(directory) {
@@ -15,7 +15,8 @@ async function walk(directory) {
     if (entry.isDirectory()) await walk(path);
     else {
       const ext = extname(entry.name).toLowerCase();
-      if (imageExtensions.has(ext)) errors.push(`Image file found: ${path}`);
+      const relativePath = path.slice(root.length + 1).replaceAll("\\", "/");
+      if (imageExtensions.has(ext) && relativePath !== "media/tasklatch-quick-demo-cover.png") errors.push("Unexpected image file: " + path);
       if (path.includes(`${join("media", "")}`) && !allowedMediaExtensions.has(ext)) errors.push(`Unexpected media file: ${path}`);
     }
   }
@@ -28,6 +29,9 @@ const css = await readFile(join(root, "styles.css"), "utf8");
 if (/<img\b|<picture\b|<svg\b/i.test(html + app)) errors.push("An image element or SVG was found in the interface source.");
 if (/https?:\/\/fonts\.|fonts\.googleapis|<img\b/i.test(html + app + css)) errors.push("An external font or image request was found.");
 if (!html.includes("<video") && !app.includes("<video") && !app.includes("video-card")) errors.push("Video walkthrough player is missing.");
+const quickDemoHtml = await readFile(join(root, "quick-demo.html"), "utf8");
+const quickDemoPage = await readFile(join(root, "src", "quick-demo-page.mjs"), "utf8");
+if (!quickDemoHtml.includes("quick-demo.css") || !quickDemoPage.includes("assignQuickDemoTask")) errors.push("Interactive one-feature demo source is missing.");
 const serverSource = await readFile(join(root, "scripts", "serve.mjs"), "utf8");
 if (!serverSource.includes("img-src 'none'")) errors.push("Static server must disallow images by policy.");
 const packageFile = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
@@ -39,5 +43,5 @@ if (errors.length) {
   const mediaDirectory = join(root, "media");
   let media = [];
   try { media = (await readdir(mediaDirectory)).filter((name) => !name.startsWith(".")); } catch {}
-  process.stdout.write(`Project checks passed. Image files: 0. Video/subtitle assets: ${media.length}.\n`);
+  process.stdout.write("Project checks passed. One screenshot cover, no app image loads. Video/subtitle assets: " + media.length + ".\n");
 }
