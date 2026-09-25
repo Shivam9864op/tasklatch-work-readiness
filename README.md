@@ -24,7 +24,7 @@ The quick demo focuses on one distinction: onboarding is not a task assignment, 
 
 [Watch the 20-second TaskLatch motion film (60 fps)](media/tasklatch-motion-promo.mp4) · [Open the HTML motion storyboard](motion-promo.html) · [Read the English captions](media/tasklatch-motion-promo.en.vtt)
 
-The film follows one idea rather than listing every feature: onboarding is not assignment, and assignment is not payment. Its motion is one continuous sequence: a moving light trail links the milestones, the camera pushes into the working product, the sample assignment is recorded in the real demo, and a restrained 3D screen move carries into the close. The sample task reference is triggered through the actual demo button, and payment remains unrecorded. It is captured at 60 fps directly from the rendered animation, with no generated in-between frames. All names and records are fictional. The film is a personal motion concept, not client work.
+The film follows one idea rather than listing every feature: onboarding is not assignment, and assignment is not payment. Motion continues through the full 20 seconds: paired light runners trace the milestone path, the camera drifts gently, fine arcs move behind the real product screen, and status cards breathe subtly. The camera then pushes into the working product, records a sample assignment in the real demo, and carries the 3D screen move into the close. Payment remains unrecorded. It is captured at 60 fps directly from the rendered animation, with no generated in-between frames. All names and records are fictional. The film is a personal motion concept, not client work.
 
 ![TaskLatch motion-film cover · personal project · synthetic data](media/tasklatch-motion-promo-cover.png)
 

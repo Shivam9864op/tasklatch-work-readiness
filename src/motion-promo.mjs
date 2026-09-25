@@ -74,6 +74,35 @@ function traceRoute(progress) {
   }
 }
 
+function drawFlowRunner(progress, alpha, tint = "cyan") {
+  const point = routePoint(progress);
+  const tailStart = Math.max(0, progress - .105);
+  const tail = routePoint(tailStart);
+  const fadeAtEdge = smooth(progress / .13) * (1 - smooth((progress - .86) / .14));
+  const rgb = tint === "amber" ? "244,206,145" : "154,229,236";
+  context.save();
+  context.globalAlpha = alpha * fadeAtEdge;
+  const gradient = context.createLinearGradient(tail.x, tail.y, point.x, point.y);
+  gradient.addColorStop(0, `rgba(${rgb},0)`);
+  gradient.addColorStop(.7, `rgba(${rgb},.22)`);
+  gradient.addColorStop(1, `rgba(${rgb},.86)`);
+  context.beginPath();
+  const samples = 15;
+  for (let index = 0; index <= samples; index++) {
+    const sample = routePoint(mix(tailStart, progress, index / samples));
+    if (index === 0) context.moveTo(sample.x, sample.y);
+    else context.lineTo(sample.x, sample.y);
+  }
+  context.strokeStyle = gradient;
+  context.lineWidth = 2;
+  context.lineCap = "round";
+  context.shadowColor = `rgba(${rgb},.8)`;
+  context.shadowBlur = 11;
+  context.stroke();
+  drawNode(point.x, point.y, 1.45, .92, tint === "amber" ? "amber" : "cyan");
+  context.restore();
+}
+
 function drawNode(x, y, radius, alpha, hue = "cyan") {
   if (alpha <= 0) return;
   const color = hue === "amber" ? "243,197,125" : "149,226,231";
@@ -142,6 +171,8 @@ function drawAtmosphere(seconds) {
     const head = routePoint(routeProgress);
     drawNode(head.x, head.y, 2.1 + Math.sin(seconds * 4.1) * .45, .25 + routeAlpha * .74);
   }
+  drawFlowRunner((seconds * .056 + .12) % 1, .58);
+  drawFlowRunner((seconds * .043 + .63) % 1, .38, "amber");
 
   const nodes = [
     { x: 382, y: 606, at: 1.0 },
@@ -158,7 +189,7 @@ function drawAtmosphere(seconds) {
   if (screenReveal > 0 && seconds < 16.5) {
     context.save();
     context.translate(1220, 535);
-    context.rotate(-.045 + Math.sin(seconds * .29) * .004);
+    context.rotate(-.045 + Math.sin(seconds * .29) * .02);
     context.globalAlpha = .085 * screenReveal * (1 - between(seconds, 15.6, 16.5));
     context.strokeStyle = "rgba(145,207,255,.75)";
     context.lineWidth = 1;
@@ -237,7 +268,7 @@ function spotlightPayment() {
     if (!style) {
       style = doc.createElement("style");
       style.id = "motion-film-highlight";
-      style.textContent = ".payment-card[data-motion-focus='true']{border-color:#e1a949!important;box-shadow:0 0 0 4px rgba(225,169,73,.22),0 12px 34px rgba(146,103,40,.15)!important}";
+      style.textContent = ".payment-card[data-motion-focus='true']{border-color:#e1a949!important;box-shadow:0 0 0 4px rgba(225,169,73,var(--motion-focus-alpha,.22)),0 12px 34px rgba(146,103,40,.15)!important}";
       doc.head.append(style);
     }
     spotlightAdded = true;
@@ -264,6 +295,7 @@ function render(time) {
   opening.querySelector(".opening-kicker").style.opacity = String(openingDetails);
   opening.querySelector("p").style.opacity = String(openingDetails);
   opening.querySelector(".opening-foot").style.opacity = String(between(seconds, 1.1, 1.65) * leave);
+  opening.querySelector(".opening-accent").style.backgroundPosition = `${42 + Math.sin(seconds * .36) * 30}% 50%`;
 
   const milestoneIn = between(seconds, 1.55, 2.5);
   const milestoneOut = 1 - between(seconds, 4.45, 5.35);
@@ -273,7 +305,10 @@ function render(time) {
   cards.forEach((card, index) => {
     const cardIn = between(seconds, 1.85 + index * .18, 2.5 + index * .18);
     card.style.opacity = String(cardIn * milestoneOut);
-    card.style.transform = `translate3d(0,${(1 - cardIn) * 13}px,0)`;
+    const float = Math.sin(seconds * .88 + index * 1.7) * 2.1;
+    card.style.transform = `translate3d(0,${(1 - cardIn) * 13 + float}px,0)`;
+    const icon = card.querySelector(".milestone-icon");
+    if (icon) icon.style.transform = `scale(${1 + .035 * Math.sin(seconds * 1.5 + index * 1.25)})`;
   });
   milestoneProgress.style.width = `${between(seconds, 1.7, 3.4) * 100}%`;
 
@@ -283,11 +318,11 @@ function render(time) {
   productWindow.style.visibility = productOpacity > .001 ? "visible" : "hidden";
   productWindow.style.opacity = String(productOpacity);
   const moveIn = 1 - windowIn;
-  const driftX = Math.sin(seconds * .42) * 2.2;
-  const driftY = Math.sin(seconds * .31 + .6) * 2.1;
-  const scale = .70 + windowIn * .30;
-  const rotateY = -15 * moveIn + Math.sin(seconds * .23) * .16;
-  const rotateX = 3.1 * moveIn + Math.cos(seconds * .27) * .12;
+  const driftX = Math.sin(seconds * .42) * 5.5;
+  const driftY = Math.sin(seconds * .31 + .6) * 4.5;
+  const scale = .70 + windowIn * .30 + windowIn * .0022 * (.5 + .5 * Math.sin(seconds * .48));
+  const rotateY = -15 * moveIn + Math.sin(seconds * .23) * .34;
+  const rotateX = 3.1 * moveIn + Math.cos(seconds * .27) * .22;
   productWindow.style.transform = `perspective(1800px) translate3d(${moveIn * 112 + driftX}px,calc(-50% + ${driftY}px),0) rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(${scale})`;
   setCopy(seconds);
 
@@ -296,10 +331,15 @@ function render(time) {
   const focusOpacity = focusIn * focusOut;
   paymentFocus.style.opacity = String(focusOpacity);
   paymentFocus.style.transform = `translate3d(${(1 - focusIn) * 12}px,${(1 - focusIn) * 8}px,0) scale(${.985 + focusIn * .015})`;
+  if (spotlightAdded) {
+    try {
+      frame.contentDocument?.querySelector(".payment-card")?.style.setProperty("--motion-focus-alpha", String(.16 + .09 * (.5 + .5 * Math.sin(seconds * 1.4))));
+    } catch { /* Keep the static payment label if the iframe is unavailable. */ }
+  }
 
   const closingIn = between(seconds, 15.9, 17.15);
   closing.style.opacity = String(closingIn);
-  closing.style.transform = `translate3d(-50%,calc(-44% + ${(1 - closingIn) * 15}px),0) scale(${.965 + closingIn * .035})`;
+  closing.style.transform = `translate3d(calc(-50% + ${Math.sin(seconds * .26) * 4}px),calc(-44% + ${(1 - closingIn) * 15 + Math.sin(seconds * .34) * 2.5}px),0) scale(${.965 + closingIn * .035 + closingIn * .003 * (.5 + .5 * Math.sin(seconds * .52))})`;
 
   const sweepPasses = [
     { start: 4.34, end: 5.58 },
@@ -321,7 +361,10 @@ function render(time) {
   const progress = (seconds / duration) * 100;
   progressFill.style.width = progress + "%";
   progressHead.style.left = progress + "%";
-  rig.style.transform = `translate3d(${Math.sin(seconds * .11) * 2.4}px,${Math.cos(seconds * .13) * 1.6}px,0) scale(${1 + between(seconds, 0, duration) * .008})`;
+  const cameraX = Math.sin(seconds * .19) * 8 + Math.sin(seconds * .075) * 5;
+  const cameraY = Math.cos(seconds * .16) * 6 + Math.sin(seconds * .29) * 2;
+  const cameraScale = 1.004 + .012 * (.5 + .5 * Math.sin(seconds * .105));
+  rig.style.transform = `translate3d(${cameraX}px,${cameraY}px,0) rotateZ(${Math.sin(seconds * .105) * .035}deg) scale(${cameraScale})`;
 
   if (seconds >= 9.8) recordSyntheticAssignment();
   if (seconds >= 13.2) spotlightPayment();
