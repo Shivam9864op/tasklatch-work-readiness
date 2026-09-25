@@ -20,7 +20,6 @@ const copyKicker = document.querySelector("#copy-kicker");
 const copyIndex = document.querySelector("#copy-index");
 const copyRuleFill = document.querySelector("#copy-rule-fill");
 const windowState = document.querySelector("#window-state");
-const lightSweep = document.querySelector("#light-sweep");
 const chapters = [
   "The gap after onboarding",
   "Three steps. Three kinds of proof.",
@@ -79,7 +78,7 @@ function drawFlowRunner(progress, alpha, tint = "cyan") {
   const tailStart = Math.max(0, progress - .105);
   const tail = routePoint(tailStart);
   const fadeAtEdge = smooth(progress / .13) * (1 - smooth((progress - .86) / .14));
-  const rgb = tint === "amber" ? "244,206,145" : "154,229,236";
+  const rgb = tint === "amber" ? "232,190,116" : "155,181,255";
   context.save();
   context.globalAlpha = alpha * fadeAtEdge;
   const gradient = context.createLinearGradient(tail.x, tail.y, point.x, point.y);
@@ -97,7 +96,7 @@ function drawFlowRunner(progress, alpha, tint = "cyan") {
   context.lineWidth = 2;
   context.lineCap = "round";
   context.shadowColor = `rgba(${rgb},.8)`;
-  context.shadowBlur = 11;
+  context.shadowBlur = 3;
   context.stroke();
   drawNode(point.x, point.y, 1.45, .92, tint === "amber" ? "amber" : "cyan");
   context.restore();
@@ -105,11 +104,11 @@ function drawFlowRunner(progress, alpha, tint = "cyan") {
 
 function drawNode(x, y, radius, alpha, hue = "cyan") {
   if (alpha <= 0) return;
-  const color = hue === "amber" ? "243,197,125" : "149,226,231";
+  const color = hue === "amber" ? "232,190,116" : "155,181,255";
   context.save();
   context.globalAlpha = alpha;
   context.shadowColor = `rgba(${color},.9)`;
-  context.shadowBlur = radius * 7;
+  context.shadowBlur = radius * 2.5;
   context.fillStyle = `rgba(${color},.9)`;
   context.beginPath();
   context.arc(x, y, radius, 0, Math.PI * 2);
@@ -133,46 +132,45 @@ function drawAtmosphere(seconds) {
   context.globalAlpha = 1;
   context.globalCompositeOperation = "source-over";
   const base = context.createLinearGradient(0, 0, width, height);
-  base.addColorStop(0, "#050a12");
-  base.addColorStop(.53, "#08101b");
-  base.addColorStop(1, "#050913");
+  base.addColorStop(0, "#171719");
+  base.addColorStop(.53, "#1c1d21");
+  base.addColorStop(1, "#171719");
   context.fillStyle = base;
   context.fillRect(0, 0, width, height);
 
   const glowX = 1180 + Math.sin(seconds * .17) * 165;
   const glowY = 425 + Math.cos(seconds * .15) * 70;
   const glow = context.createRadialGradient(glowX, glowY, 10, glowX, glowY, 790);
-  glow.addColorStop(0, "rgba(49,118,159,.17)");
-  glow.addColorStop(.48, "rgba(40,98,141,.07)");
-  glow.addColorStop(1, "rgba(5,10,19,0)");
+  glow.addColorStop(0, "rgba(82,106,166,.08)");
+  glow.addColorStop(.48, "rgba(65,82,130,.035)");
+  glow.addColorStop(1, "rgba(23,23,25,0)");
   context.fillStyle = glow;
   context.fillRect(0, 0, width, height);
 
   context.save();
   context.globalCompositeOperation = "screen";
-  const routeAlpha = seconds < 6.3 ? .19 + between(seconds, 0, 6.3) * .42 : .12 + (1 - between(seconds, 15.2, 17.2)) * .08;
+  const routeAlpha = seconds < 6.3 ? .08 + between(seconds, 0, 6.3) * .18 : .045 + (1 - between(seconds, 15.2, 17.2)) * .035;
   traceRoute(1);
-  context.strokeStyle = `rgba(115,196,221,${routeAlpha * .24})`;
-  context.lineWidth = 1;
+  context.strokeStyle = `rgba(155,181,255,${routeAlpha * .2})`;
+  context.lineWidth = 1.2;
   context.stroke();
   const routeProgress = Math.min(1, seconds / 5.8);
   if (routeProgress > 0) {
     traceRoute(routeProgress);
     const sweep = context.createLinearGradient(0, 720, 1650, 315);
-    sweep.addColorStop(0, "rgba(117,238,208,.04)");
-    sweep.addColorStop(.54, `rgba(114,221,231,${routeAlpha * .42})`);
-    sweep.addColorStop(1, `rgba(164,208,255,${routeAlpha * .78})`);
+    sweep.addColorStop(0, `rgba(155,181,255,${routeAlpha * .12})`);
+    sweep.addColorStop(.56, `rgba(155,181,255,${routeAlpha * .3})`);
+    sweep.addColorStop(1, `rgba(195,209,255,${routeAlpha * .52})`);
     context.strokeStyle = sweep;
-    context.lineWidth = 2.2;
-    context.shadowColor = "rgba(113,209,231,.52)";
-    context.shadowBlur = 13;
+    context.lineWidth = 1.5;
+    context.shadowColor = "rgba(145,169,238,.24)";
+    context.shadowBlur = 4;
     context.stroke();
     context.shadowBlur = 0;
     const head = routePoint(routeProgress);
-    drawNode(head.x, head.y, 2.1 + Math.sin(seconds * 4.1) * .45, .25 + routeAlpha * .74);
+    drawNode(head.x, head.y, 1.8, .2 + routeAlpha * .5);
   }
-  drawFlowRunner((seconds * .056 + .12) % 1, .58);
-  drawFlowRunner((seconds * .043 + .63) % 1, .38, "amber");
+  drawFlowRunner((seconds * .056 + .12) % 1, .27);
 
   const nodes = [
     { x: 382, y: 606, at: 1.0 },
@@ -181,43 +179,13 @@ function drawAtmosphere(seconds) {
   ];
   for (const [index, node] of nodes.entries()) {
     const appear = between(seconds, node.at, node.at + .85);
-    const pulse = 1 + Math.sin((seconds - node.at) * 2.4) * .16;
-    drawNode(node.x, node.y, (index === 1 ? 3 : 2.5) * pulse, appear * (index === 2 && seconds > 3.8 ? .53 : .76), index === 2 ? "amber" : "cyan");
-  }
-
-  const screenReveal = between(seconds, 4.15, 6.1);
-  if (screenReveal > 0 && seconds < 16.5) {
-    context.save();
-    context.translate(1220, 535);
-    context.rotate(-.045 + Math.sin(seconds * .29) * .02);
-    context.globalAlpha = .085 * screenReveal * (1 - between(seconds, 15.6, 16.5));
-    context.strokeStyle = "rgba(145,207,255,.75)";
-    context.lineWidth = 1;
-    for (const radius of [415, 459, 503]) {
-      context.beginPath();
-      context.ellipse(0, 0, radius, radius * .49, 0, -.88, 2.12);
-      context.stroke();
-    }
-    context.restore();
-  }
-
-  for (let index = 0; index < 72; index++) {
-    const rate = 3.8 + (index % 8) * 1.5;
-    const x = ((index * 347 + seconds * rate) % 2240) - 150;
-    const y = (index * 173) % 1080 + Math.sin(seconds * .34 + index * 1.7) * 8;
-    const size = index % 9 === 0 ? 1.2 : .55;
-    const alpha = .08 + (index % 5) * .018;
-    context.globalAlpha = alpha;
-    context.fillStyle = index % 7 === 0 ? "#b9e4ff" : "#a4c4d9";
-    context.beginPath();
-    context.ellipse(x, y, size * 3.6, size, .02, 0, Math.PI * 2);
-    context.fill();
+    drawNode(node.x, node.y, index === 1 ? 2.6 : 2.2, appear * (index === 2 && seconds > 3.8 ? .38 : .55), index === 2 ? "amber" : "cyan");
   }
   context.restore();
 
   const vignette = context.createRadialGradient(960, 510, 280, 960, 510, 1050);
   vignette.addColorStop(.45, "rgba(0,0,0,0)");
-  vignette.addColorStop(1, "rgba(0,0,0,.39)");
+  vignette.addColorStop(1, "rgba(0,0,0,.12)");
   context.fillStyle = vignette;
   context.fillRect(0, 0, width, height);
 }
@@ -239,7 +207,7 @@ function setCopy(seconds) {
   }
   productCopy.style.opacity = String(clamp(between(seconds, 4.52, 5.55) * (1 - between(seconds, 15.3, 16.3)) * (1 - transition * .75)));
   const rise = seconds < 8.15 ? between(seconds, 4.5, 5.55) : seconds < 11.75 ? between(seconds, 8.1, 8.48) : between(seconds, 11.7, 12.05);
-  productCopy.style.transform = `translate3d(0,calc(-44% + ${(1 - rise) * 12 + Math.sin(seconds * .48) * 2}px),0)`;
+  productCopy.style.transform = `translate3d(0,calc(-44% + ${(1 - rise) * 6}px),0)`;
   copyRuleFill.style.width = `${clamp((seconds - 4.7) / 10.5) * 100}%`;
 }
 
@@ -284,12 +252,12 @@ function render(time) {
   const leave = 1 - between(seconds, 4.25, 5.28);
   const openingOpacity = clamp(entry * leave);
   opening.style.opacity = String(openingOpacity);
-  opening.style.transform = `translate3d(${(1 - entry) * -27}px,calc(-52% + ${Math.sin(seconds * .31) * 2}px),0) scale(${.988 + .012 * entry})`;
+  opening.style.transform = `translate3d(${(1 - entry) * -18}px,-52%,0) scale(${.992 + .008 * entry})`;
   opening.querySelectorAll("h1 span").forEach((line, index) => {
     const reveal = between(seconds, .38 + index * .32, .98 + index * .32);
     line.style.opacity = String(reveal * leave);
-    line.style.transform = `translate3d(0,${(1 - reveal) * (index ? 25 : 19)}px,0)`;
-    line.style.filter = `blur(${(1 - reveal) * 6}px)`;
+    line.style.transform = `translate3d(0,${(1 - reveal) * (index ? 15 : 12)}px,0)`;
+    line.style.filter = `blur(${(1 - reveal) * 1.5}px)`;
   });
   const openingDetails = between(seconds, .8, 1.45) * leave;
   opening.querySelector(".opening-kicker").style.opacity = String(openingDetails);
@@ -301,14 +269,14 @@ function render(time) {
   const milestoneOut = 1 - between(seconds, 4.45, 5.35);
   const milestoneOpacity = milestoneIn * milestoneOut;
   milestones.style.opacity = String(milestoneOpacity);
-  milestones.style.transform = `translate3d(0,${(1 - milestoneIn) * 17 + between(seconds, 5.1, 6.1) * -12}px,0)`;
+  milestones.style.transform = `translate3d(0,${(1 - milestoneIn) * 12 + between(seconds, 5.1, 6.1) * -8}px,0)`;
   cards.forEach((card, index) => {
     const cardIn = between(seconds, 1.85 + index * .18, 2.5 + index * .18);
     card.style.opacity = String(cardIn * milestoneOut);
-    const float = Math.sin(seconds * .88 + index * 1.7) * 2.1;
+    const float = Math.sin(seconds * .7 + index * 1.7) * .45;
     card.style.transform = `translate3d(0,${(1 - cardIn) * 13 + float}px,0)`;
     const icon = card.querySelector(".milestone-icon");
-    if (icon) icon.style.transform = `scale(${1 + .035 * Math.sin(seconds * 1.5 + index * 1.25)})`;
+    if (icon) icon.style.transform = `scale(${1 + .006 * Math.sin(seconds * 1.2 + index * 1.25)})`;
   });
   milestoneProgress.style.width = `${between(seconds, 1.7, 3.4) * 100}%`;
 
@@ -318,11 +286,11 @@ function render(time) {
   productWindow.style.visibility = productOpacity > .001 ? "visible" : "hidden";
   productWindow.style.opacity = String(productOpacity);
   const moveIn = 1 - windowIn;
-  const driftX = Math.sin(seconds * .42) * 5.5;
-  const driftY = Math.sin(seconds * .31 + .6) * 4.5;
-  const scale = .70 + windowIn * .30 + windowIn * .0022 * (.5 + .5 * Math.sin(seconds * .48));
-  const rotateY = -15 * moveIn + Math.sin(seconds * .23) * .34;
-  const rotateX = 3.1 * moveIn + Math.cos(seconds * .27) * .22;
+  const driftX = Math.sin(seconds * .24) * 1.2;
+  const driftY = Math.sin(seconds * .2 + .6) * .8;
+  const scale = .76 + windowIn * .24;
+  const rotateY = -5 * moveIn;
+  const rotateX = 1.1 * moveIn;
   productWindow.style.transform = `perspective(1800px) translate3d(${moveIn * 112 + driftX}px,calc(-50% + ${driftY}px),0) rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(${scale})`;
   setCopy(seconds);
 
@@ -330,41 +298,26 @@ function render(time) {
   const focusOut = 1 - between(seconds, 15.55, 16.35);
   const focusOpacity = focusIn * focusOut;
   paymentFocus.style.opacity = String(focusOpacity);
-  paymentFocus.style.transform = `translate3d(${(1 - focusIn) * 12}px,${(1 - focusIn) * 8}px,0) scale(${.985 + focusIn * .015})`;
+  paymentFocus.style.transform = `translate3d(${(1 - focusIn) * 5}px,${(1 - focusIn) * 3}px,0) scale(${.994 + focusIn * .006})`;
   if (spotlightAdded) {
     try {
-      frame.contentDocument?.querySelector(".payment-card")?.style.setProperty("--motion-focus-alpha", String(.16 + .09 * (.5 + .5 * Math.sin(seconds * 1.4))));
+      frame.contentDocument?.querySelector(".payment-card")?.style.setProperty("--motion-focus-alpha", ".15");
     } catch { /* Keep the static payment label if the iframe is unavailable. */ }
   }
 
   const closingIn = between(seconds, 15.9, 17.15);
   closing.style.opacity = String(closingIn);
-  closing.style.transform = `translate3d(calc(-50% + ${Math.sin(seconds * .26) * 4}px),calc(-44% + ${(1 - closingIn) * 15 + Math.sin(seconds * .34) * 2.5}px),0) scale(${.965 + closingIn * .035 + closingIn * .003 * (.5 + .5 * Math.sin(seconds * .52))})`;
-
-  const sweepPasses = [
-    { start: 4.34, end: 5.58 },
-    { start: 15.55, end: 16.56 },
-  ];
-  let sweepProgress = -1;
-  let sweepAlpha = 0;
-  for (const pass of sweepPasses) {
-    if (seconds >= pass.start && seconds <= pass.end) {
-      sweepProgress = (seconds - pass.start) / (pass.end - pass.start);
-      sweepAlpha = Math.sin(sweepProgress * Math.PI) * .52;
-    }
-  }
-  lightSweep.style.opacity = String(sweepAlpha);
-  if (sweepProgress >= 0) lightSweep.style.transform = `translate3d(${-2300 + sweepProgress * 4550}px,0,0) skewX(-8deg)`;
+  closing.style.transform = `translate3d(-50%,calc(-44% + ${(1 - closingIn) * 8}px),0) scale(${.985 + closingIn * .015})`;
 
   const chapter = seconds < 2.25 ? 0 : seconds < 5.8 ? 1 : seconds < 8.15 ? 2 : seconds < 11.75 ? 3 : seconds < 15.9 ? 4 : 5;
   chapterLabel.textContent = chapters[chapter];
   const progress = (seconds / duration) * 100;
   progressFill.style.width = progress + "%";
   progressHead.style.left = progress + "%";
-  const cameraX = Math.sin(seconds * .19) * 8 + Math.sin(seconds * .075) * 5;
-  const cameraY = Math.cos(seconds * .16) * 6 + Math.sin(seconds * .29) * 2;
-  const cameraScale = 1.004 + .012 * (.5 + .5 * Math.sin(seconds * .105));
-  rig.style.transform = `translate3d(${cameraX}px,${cameraY}px,0) rotateZ(${Math.sin(seconds * .105) * .035}deg) scale(${cameraScale})`;
+  const cameraX = Math.sin(seconds * .12) * .8;
+  const cameraY = Math.cos(seconds * .1) * .55;
+  const cameraScale = 1.002 + .003 * between(seconds, 0, duration);
+  rig.style.transform = `translate3d(${cameraX}px,${cameraY}px,0) scale(${cameraScale})`;
 
   if (seconds >= 9.8) recordSyntheticAssignment();
   if (seconds >= 13.2) spotlightPayment();

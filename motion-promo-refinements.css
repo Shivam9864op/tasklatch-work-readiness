@@ -15,3 +15,51 @@
   .product-window{left:3%;top:57%;width:94%;height:56%}
   .iframe-crop iframe{transform:scale(.55)}
 }
+
+/* Art direction: quiet graphite, warm white, and one precise blue. */
+:root{--white:#f5f5f7;--muted:#a1a1a6;--blue:#9bb6ff;--cyan:#91aaf5;--amber:#e4b567;color-scheme:dark}
+body{background:#171719;color:var(--white)}
+.light-sweep,.film-grain{display:none!important}
+.film-shell{padding-top:42px;padding-bottom:34px}
+.film-header{border-color:rgba(255,255,255,.1)}
+.brand-icon,.closing-mark{border:0;border-radius:9px;background:#fff;color:#315fe8;box-shadow:none}
+.project-note{color:#a1a1a6}
+.live-dot{background:#71c19f;box-shadow:none}
+.opening-kicker,.copy-kicker{color:#afb3bd}
+.kicker-dash{background:#7896e8;box-shadow:none}
+.opening h1{letter-spacing:-.075em;font-weight:650}
+.opening-accent{background:none;color:#9bb6ff;-webkit-text-fill-color:#9bb6ff;text-shadow:none}
+.opening p{color:#b8bac2}
+.opening-foot{color:#a1a1a6}
+.opening-foot strong{color:#ececf0}
+.mini-ring{border-color:#4a4a50;border-radius:8px;background:#242428;color:#afc2ff}
+.milestone-line{background:rgba(255,255,255,.15)}
+.milestone-line span{background:#8da9ff;box-shadow:none}
+.milestone-card{border-color:#39393e;border-radius:12px;background:#202023;box-shadow:0 8px 26px rgba(0,0,0,.16);backdrop-filter:none}
+.milestone-card strong{color:#f1f1f3}
+.milestone-card>span{color:#a1a1a6}
+.milestone-icon{box-shadow:none}
+.product-copy h2{letter-spacing:-.065em;font-weight:620}
+.product-copy h2 em{color:#a9beff;text-shadow:none}
+.product-copy p{color:#b8bac2}
+.copy-index{border-color:#4d5f91;border-radius:7px;color:#b8c8ff}
+.copy-rule{background:rgba(255,255,255,.15)}
+.copy-rule span{background:#89a5fa;box-shadow:none}
+.product-window{border-color:#dadbe0;border-radius:14px;box-shadow:0 26px 70px rgba(0,0,0,.24);transform-style:preserve-3d}
+.window-topline{background:#f3f3f5}
+.window-edge-glint{display:none}
+.payment-focus{border-color:rgba(228,181,103,.48);border-radius:10px;background:#242427;box-shadow:0 8px 26px rgba(0,0,0,.2);backdrop-filter:none}
+.focus-icon{border-color:rgba(228,181,103,.4);background:rgba(228,181,103,.1)}
+.closing-brand{color:#f5f5f7}
+.closing-rule{background:#7995e6;box-shadow:none}
+.closing h2{letter-spacing:-.07em;font-weight:620}
+.closing h2 em{color:#a9beff}
+.closing p{color:#a1a1a6}
+.closing-link{border-color:#414147;border-radius:8px;background:#202023;color:#dedee3}
+.closing-link b{color:#9bb6ff}
+.progress-track{background:rgba(255,255,255,.16)}
+.progress-track span{background:#8da9ff;box-shadow:none}
+.progress-track i{width:6px;height:6px;background:#dce5ff;box-shadow:none}
+.footer-meta{color:#9b9ba2}
+.footer-meta span:first-child{color:#d2d2d7}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

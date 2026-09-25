@@ -1,0 +1,131 @@
+/* Shared visual refinement for the TaskLatch workspace and its focused demo. */
+:root {
+  color-scheme: light;
+  --ink: #1d1d1f;
+  --muted: #6e6e73;
+  --line: #e5e5ea;
+  --paper: #fff;
+  --canvas: #f5f5f7;
+  --navy: #19191b;
+  --teal: #315fe8;
+  --teal-soft: #edf2ff;
+  --amber: #95600f;
+  --amber-soft: #fff5df;
+  --red: #b43b45;
+  --red-soft: #fff0f0;
+  --blue: #315fe8;
+  --blue-soft: #edf2ff;
+  --success: #18794e;
+  --success-soft: #eaf6ef;
+  --shadow: 0 1px 2px rgba(20, 20, 24, .035), 0 8px 24px rgba(20, 20, 24, .035);
+  --ease-out: cubic-bezier(.2, .65, .3, 1);
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--canvas); }
+
+/* Main workspace */
+.sidebar {
+  background: #19191b;
+  box-shadow: none;
+}
+.brand-mark { background: #fff; color: #315fe8; }
+.nav-item { transition: background .18s ease, color .18s ease; }
+.nav-item.is-active { background: #29292c; box-shadow: inset 2px 0 #8eacff; }
+.is-active .nav-icon { background: #363a46; color: #c4d2ff; }
+.privacy-card { background: rgba(255,255,255,.045); border-color: #353539; }
+.topbar { background: rgba(255,255,255,.94); border-color: var(--line); }
+.breadcrumb strong, .page-heading h1, .stat-value { color: var(--ink); }
+.demo-pill { color: #3559bf; border-color: #dbe4ff; background: #f6f8ff; }
+.demo-pill i { background: #5079ed; }
+.content { background: transparent; }
+.eyebrow, .text-button, .rule-sign { color: var(--teal); }
+.hero-card {
+  background: linear-gradient(112deg, #1d1d1f 0%, #202126 72%, #252a35 100%);
+  border: 1px solid rgba(255,255,255,.07);
+  box-shadow: 0 10px 28px rgba(20,20,24,.09);
+}
+.hero-card::before, .hero-card:after { display: none; }
+.hero-card .eyebrow { color: #a9bdff; }
+.hero-card p { color: #d7d7dc; }
+.hero-card h1 { letter-spacing: -.045em; }
+.hero-card .button-primary { background: #fff; color: #1d1d1f; box-shadow: none; }
+.hero-card .button-primary:hover { background: #e8edfa; }
+.hero-card .button-secondary { border-color: #62636b; color: #f4f4f6; }
+.hero-card .button-secondary:hover { background: rgba(255,255,255,.08); }
+.hero-note { color: #aeb0b9; }
+.button { transition: color .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease, transform .12s ease; }
+.button-primary { background: var(--teal); box-shadow: none; }
+.button-primary:hover { background: #234ecb; box-shadow: 0 2px 8px rgba(49,95,232,.16); }
+.button-secondary { background: #fff; border-color: #d7d7dc; color: #333338; }
+.button-secondary:hover { border-color: #aebde7; background: #fff; }
+.button:active { transform: scale(.985); }
+.card { transition: box-shadow .2s ease, border-color .2s ease; }
+.stat-card.good .stat-value { color: var(--success); }
+.tag-paid { background: var(--success-soft); color: #08735d; }
+.stage-node.done .stage-circle { background: #ddf3e9; color: var(--success); }
+.stage-node.done .stage-caption { color: #357864; }
+.stage-node.current .stage-circle { background: var(--teal); box-shadow: 0 0 0 3px #e8edfa; }
+.opp-row { transition: border-color .18s ease, background .18s ease; }
+.opp-row:hover { border-color: #b8c7ed; background: #fbfcff; }
+.insight-card { background: #fafafd; border-color: #ebebef; }
+.field input, .field select, .field textarea { transition: border-color .18s ease, box-shadow .18s ease; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: #6383e4; box-shadow: 0 0 0 3px rgba(49,95,232,.12); }
+.check-row input { accent-color: var(--teal); }
+.trail-item.is-current .trail-dot { background: var(--teal); box-shadow: 0 0 0 3px #e8edfa; }
+.data-table th { background: #f7f7f9; }
+.data-table tr:hover td { background: #fafafd; }
+.video-frame { background: #19191b; }
+.progress-bar span { background: var(--teal); }
+.toast { background: #262629; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline-color: #587be0; }
+.guided-demo-callout { border-color: #e1e4ec; background: #fff; }
+.guided-demo-callout strong { color: #29292d; }
+
+/* The compact interactive demo uses the same visual language. */
+.quick-page { background: var(--canvas); }
+.quick-topbar { border-color: var(--line); }
+.quick-brand { color: var(--ink); }
+.quick-brand-mark { background: #fff; color: #315fe8; }
+.sample-label, .local-pill { color: #3559bf; border-color: #dbe4ff; background: #f6f8ff; }
+.sample-label span { background: #5079ed; }
+.workspace-link { color: #315fe8; }
+.quick-eyebrow { color: #315fe8; }
+.quick-intro h1 { color: #1d1d1f; }
+.quick-intro h1 span { color: #315fe8; }
+.intro-mark i { background: linear-gradient(90deg, #7e9bef 0 49%, #dfe2e9 50%); }
+.intro-mark i:after { background: #315fe8; box-shadow: 0 0 0 2px #e8edfa; }
+.workspace-card { border-color: #e3e3e8; box-shadow: 0 8px 28px rgba(20,20,24,.055); }
+.demo-sidebar { background: #fafafd; border-color: #ebebef; }
+.workspace-avatar { background: #edf2ff; color: #315fe8; }
+.side-nav.selected { background: #edf2ff; color: #3153bb; }
+.side-nav.selected .side-icon { color: #315fe8; }
+.side-count { background: #e4ebff; color: #3153bb; }
+.record-button { background: #315fe8; box-shadow: none; transition: background .18s ease, transform .12s ease; }
+.record-button:hover { background: #234ecb; box-shadow: none; transform: none; }
+.record-button:active { transform: scale(.985); }
+.record-button:focus-visible, .reset-button:focus-visible, .workspace-link:focus-visible { outline-color: #587be0; }
+.detail-card, .milestone-panel { border-color: #e6e6eb; }
+.state-card { background: #fafafd; }
+.milestone.current .milestone-circle { background: #e0a23b; }
+.milestone.done .milestone-circle { background: #39a98a; }
+
+/* Keep transitions quick and restrained; honor reduced-motion preferences. */
+@keyframes view-arrive {
+  from { opacity: .94; }
+  to { opacity: 1; }
+}
+@keyframes button-arrive {
+  from { opacity: .94; }
+  to { opacity: 1; }
+}
+.content > * { animation: view-arrive .16s ease-out both; }
+.assignment-note { animation: button-arrive .18s ease-out both; }
+
+@media (hover: hover) {
+  .stat-card:hover, .section-card:hover, .video-card:hover { box-shadow: 0 3px 14px rgba(20,20,24,.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
