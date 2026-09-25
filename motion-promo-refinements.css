@@ -1,0 +1,17 @@
+/* Keep the real demo inside its glass frame while letting it dominate the shot. */
+.opening{width:86%;max-width:1500px}
+.light-sweep{background:linear-gradient(108deg,transparent 43%,rgba(157,226,255,.055) 48%,rgba(199,241,255,.15) 49.5%,rgba(75,163,255,.05) 51%,transparent 56%);filter:blur(4px)}
+.product-window{left:27%;width:73%;height:84%}
+.iframe-crop iframe{transform:scale(.78)}
+.product-copy h2{font-size:clamp(42px,3.3vw,64px)}
+.waiting .milestone-icon{display:flex;align-items:center;justify-content:center;gap:2px}
+
+@media(max-width:1200px){
+  .product-window{left:26%;width:74%;height:75%}
+  .iframe-crop iframe{transform:scale(.72)}
+}
+
+@media(max-width:800px){
+  .product-window{left:3%;top:57%;width:94%;height:56%}
+  .iframe-crop iframe{transform:scale(.55)}
+}

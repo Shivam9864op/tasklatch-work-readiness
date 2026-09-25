@@ -14,12 +14,12 @@ const captureFps = 60;
 const outputFps = 60;
 const duration = 20;
 const cues = [
-  [0, 3.2, "Onboarded does not mean your first task has arrived."],
-  [3.2, 6, "Track each step with its own evidence."],
-  [6, 9.8, "Keep the whole work trail in one private workspace."],
-  [9.8, 13.2, "A task changes status only after its reference is recorded."],
-  [13.2, 16.6, "Assigned is not paid. Payment stays unrecorded."],
-  [16.6, 20, "TaskLatch. Personal project. Synthetic sample data."],
+  [0, 2.25, "Onboarded. What happens next?"],
+  [2.25, 5.8, "Setup, assignment and payment are separate milestones."],
+  [5.8, 8.15, "One clear work trail."],
+  [8.15, 11.75, "Record the task reference when an assignment arrives."],
+  [11.75, 15.9, "Assigned is not paid. Keep payment separate."],
+  [15.9, 20, "TaskLatch. Personal project. Synthetic sample data."],
 ];
 const edgeCandidates = process.platform === "win32"
   ? [process.env.EDGE_BIN, "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe"]
@@ -212,8 +212,8 @@ async function main() {
       throw new Error("The product iframe did not start in its truthful synthetic state.");
     }
 
-    await evaluate("window.__taskLatchMotion.seek(1.35)");
-    await wait(1500);
+    await evaluate("window.__taskLatchMotion.seek(10.8)");
+    await wait(250);
     const cover = await send("Page.captureScreenshot", { format: "png", fromSurface: true });
     await writeFile(coverPath, Buffer.from(cover.data, "base64"));
     await evaluate("window.__taskLatchMotion.restart()");
@@ -226,9 +226,10 @@ async function main() {
     }
     await capture(10);
     const finalPayment = String(await evaluate("document.querySelector('#tasklatch-demo-frame').contentDocument.querySelector('#payment-label').textContent.trim()"));
-    const finalBeat = String(await evaluate("document.body.dataset.scene"));
-    if (finalPayment !== "Not recorded" || finalBeat !== "5") {
-      throw new Error("The closing scene must keep payment unrecorded and reach the brand card.");
+    const finalChapter = String(await evaluate("document.querySelector('#chapter-label').textContent.trim()"));
+    const closingOpacity = Number(await evaluate("document.querySelector('#closing').style.opacity"));
+    if (finalPayment !== "Not recorded" || finalChapter !== "Know what’s next" || closingOpacity < 0.99) {
+      throw new Error("The closing scene must keep payment unrecorded and show the project close.");
     }
     if (frameIndex !== captureFps * duration) throw new Error("Expected " + (captureFps * duration) + " captured frames; captured " + frameIndex + ".");
 
@@ -244,8 +245,9 @@ async function main() {
       "-c:v", "libx264",
       "-pix_fmt", "yuv420p",
       "-color_range", "tv",
-      "-crf", "20",
-      "-preset", "fast",
+      "-crf", "18",
+      "-preset", "medium",
+      "-tune", "animation",
       "-movflags", "+faststart",
       "-metadata", "title=TaskLatch — Onboarded is not assigned",
       "-metadata", "comment=Personal motion concept using a working synthetic-data product demo",

@@ -3,136 +3,70 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#071328">
-    <meta name="description" content="A caption-led motion film introducing TaskLatch with a working synthetic-data product demo.">
-    <title>TaskLatch — Onboarded is not assigned</title>
-    <link rel="stylesheet" href="./motion-promo.css">
+    <meta name="theme-color" content="#050a13">
+    <meta name="description" content="A cinematic product film for TaskLatch, with a real synthetic-data demo.">
+    <title>TaskLatch — Know what’s next</title>
+    <link rel="stylesheet" href="./motion-promo-vfx.css">
+    <link rel="stylesheet" href="./motion-promo-refinements.css">
     <link rel="stylesheet" href="./motion-promo-timing.css">
     <script type="module" src="./src/motion-promo.mjs"></script>
   </head>
-  <body data-scene="0" data-motion-mode="controlled">
-    <div class="backdrop" aria-hidden="true">
-      <div class="backdrop-glow glow-one"></div>
-      <div class="backdrop-glow glow-two"></div>
-      <div class="backdrop-grid"></div>
-      <div class="backdrop-grain"></div>
-    </div>
-
-    <div class="film-frame">
+  <body data-motion-mode="controlled">
+    <canvas id="motion-atmosphere" aria-hidden="true"></canvas>
+    <div class="light-sweep" id="light-sweep" aria-hidden="true"></div>
+    <div class="film-shell">
       <header class="film-header">
-        <div class="film-brand">
-          <span class="film-mark">TL</span>
-          <span class="film-word">TaskLatch</span>
-        </div>
-        <div class="film-context"><span class="live-dot"></span> PERSONAL PROJECT <i></i> SYNTHETIC DATA</div>
+        <div class="brand"><span class="brand-icon">t</span><span>TaskLatch</span></div>
+        <div class="project-note"><span class="live-dot"></span> PERSONAL PROJECT <i></i> SYNTHETIC DATA</div>
       </header>
 
-      <main class="story" id="story">
-        <section class="scene hook-scene active" data-beat="0" aria-label="Onboarded does not mean assigned work">
-          <div class="hook-copy">
-            <div class="eyebrow"><span class="eyebrow-line"></span> THE WORK-READINESS GAP</div>
-            <h1>Onboarded.<br><em>Still waiting?</em></h1>
-            <p>A finished profile doesn’t mean your first paid task has arrived.</p>
-            <div class="hook-note"><span class="note-icon">↗</span><span>Separate what happened<br><strong>from what you’re still waiting for.</strong></span></div>
-          </div>
-          <div class="signal-board">
-            <div class="signal-orbit orbit-a"></div>
-            <div class="signal-orbit orbit-b"></div>
-            <div class="signal-card setup-card">
-              <div class="signal-icon good-icon">✓</div>
-              <div><small>PROFILE &amp; CONTRACT</small><strong>Setup recorded</strong></div>
-              <span class="signal-status good-status">DONE</span>
-            </div>
-            <div class="signal-connector"><i></i><b></b><i></i></div>
-            <div class="signal-card waiting-card">
-              <div class="signal-icon wait-icon">···</div>
-              <div><small>TASK ASSIGNMENT</small><strong>Still waiting</strong></div>
-              <span class="signal-status wait-status"><i></i> OPEN</span>
-            </div>
-            <div class="signal-foot"><span class="foot-dot"></span> No task reference recorded</div>
-          </div>
-          <div class="beat-index">01 <span>/</span> 06</div>
-        </section>
+      <main class="stage" id="stage">
+        <div class="camera-rig" id="camera-rig">
+          <section class="opening" id="opening" aria-label="The gap between onboarding and paid work">
+            <div class="opening-kicker"><span class="kicker-dash"></span> A SMALL TOOL FOR A COMMON QUESTION</div>
+            <h1><span>Onboarded.</span><span class="opening-accent">What happens next?</span></h1>
+            <p>Keep setup, task assignment and payment as separate milestones—with proof for each.</p>
+            <div class="opening-foot"><span class="mini-ring">↗</span><span>Made for independent contractors<br><strong>who need a clearer work trail.</strong></span></div>
+          </section>
 
-        <section class="scene milestones-scene" data-beat="1" aria-label="Separate milestones">
-          <div class="center-copy">
-            <div class="eyebrow"><span class="eyebrow-line"></span> A CLEARER WAY TO TRACK IT</div>
-            <h2>Four steps.<br><em>Different proof.</em></h2>
-            <p>Onboarding. Assignment. Delivery. Payment.<br>Connected—but never the same thing.</p>
-          </div>
-          <div class="milestone-ribbon">
-            <div class="ribbon-track"><span class="ribbon-fill"></span></div>
-            <article class="ribbon-card recorded">
-              <span class="ribbon-node">✓</span><small>01 · SETUP</small><strong>Profile ready</strong><span class="ribbon-state">Recorded</span>
-            </article>
-            <article class="ribbon-card recorded">
-              <span class="ribbon-node">✓</span><small>02 · CONTRACT</small><strong>Terms saved</strong><span class="ribbon-state">Recorded</span>
-            </article>
-            <article class="ribbon-card pending">
-              <span class="ribbon-node">···</span><small>03 · ASSIGNMENT</small><strong>Task not yet shown</strong><span class="ribbon-state">Waiting</span>
-            </article>
-            <article class="ribbon-card unknown">
-              <span class="ribbon-node">—</span><small>04 · PAYMENT</small><strong>Not recorded</strong><span class="ribbon-state">Unknown</span>
-            </article>
-            <div class="ribbon-caption">FICTIONAL WORKSPACE · NORTHSTAR AI LAB</div>
-          </div>
-          <div class="beat-index">02 <span>/</span> 06</div>
-        </section>
+          <section class="milestone-strip" id="milestones" aria-label="Three separate work milestones">
+            <div class="milestone-line"><span id="milestone-progress"></span></div>
+            <article class="milestone-card done"><div class="milestone-icon">✓</div><small>01 <i></i> SETUP</small><strong>Recorded</strong><span>Profile and contract</span></article>
+            <article class="milestone-card waiting"><div class="milestone-icon"><b></b><b></b><b></b></div><small>02 <i></i> ASSIGNMENT</small><strong>Still waiting</strong><span>No task reference yet</span></article>
+            <article class="milestone-card unknown"><div class="milestone-icon">—</div><small>03 <i></i> PAYMENT</small><strong>Not recorded</strong><span>Separate proof needed</span></article>
+            <div class="sample-caption">FICTIONAL CONTRACTOR WORKSPACE <span>·</span> NORTHSTAR AI LAB</div>
+          </section>
 
-        <section class="scene product-scene scene-product-intro" data-beat="2" aria-label="TaskLatch product overview">
-          <div class="product-copy">
-            <div class="eyebrow"><span class="eyebrow-line"></span> MEET TASKLATCH</div>
-            <h2>One trail.<br><em>Clear next steps.</em></h2>
-            <p>Keep each work milestone, its evidence and your next move together.</p>
-            <div class="product-tag"><span>01</span> See what is known</div>
+          <div class="product-copy" id="product-copy" aria-live="off">
+            <div class="copy-kicker"><span class="copy-index" id="copy-index">01</span><span id="copy-kicker">YOUR WORK, IN CONTEXT</span></div>
+            <h2 id="copy-title">One clear<br><em>work trail.</em></h2>
+            <p id="copy-body">Record what is known, what is pending, and the next action—without guessing.</p>
+            <div class="copy-rule"><span id="copy-rule-fill"></span></div>
           </div>
-          <div class="beat-index">03 <span>/</span> 06</div>
-        </section>
 
-        <section class="scene product-scene scene-assignment" data-beat="3" aria-label="Record a sample task assignment">
-          <div class="product-copy">
-            <div class="eyebrow"><span class="eyebrow-line"></span> WHEN THE TASK ARRIVES</div>
-            <h2>Record the<br><em>evidence.</em></h2>
-            <p>The sample assignment changes the status only after a task reference is added.</p>
-            <div class="product-tag success-tag"><span>02</span> Sample task recorded</div>
+          <div class="product-window" id="product-window" aria-label="Working TaskLatch demo">
+            <div class="window-topline"><span class="window-light red"></span><span class="window-light amber"></span><span class="window-light green"></span><span class="window-title">TaskLatch <span>/</span> Work trail</span><span class="window-demo">SYNTHETIC SAMPLE</span></div>
+            <div class="iframe-crop"><iframe id="tasklatch-demo-frame" title="Working TaskLatch synthetic sample" src="./quick-demo.html?source=motion-film" loading="eager"></iframe></div>
+            <div class="window-foot"><span><i></i> LOCAL DEMO</span><span id="window-state">ONBOARDING RECORDED <b>·</b> TASK NOT ASSIGNED</span></div>
+            <div class="window-edge-glint" aria-hidden="true"></div>
           </div>
-          <div class="beat-index">04 <span>/</span> 06</div>
-        </section>
 
-        <section class="scene product-scene scene-payment" data-beat="4" aria-label="Task assignment does not mean payment">
-          <div class="product-copy">
-            <div class="eyebrow"><span class="eyebrow-line"></span> ONE IMPORTANT DISTINCTION</div>
-            <h2>Assigned<br><em>isn’t paid.</em></h2>
-            <p>TaskLatch keeps payment unrecorded until there is separate evidence.</p>
-            <div class="product-tag caution-tag"><span>03</span> Payment stays unknown</div>
-          </div>
-          <div class="beat-index">05 <span>/</span> 06</div>
-        </section>
+          <div class="payment-focus" id="payment-focus"><span class="focus-icon">↗</span><div><small>KEEP THIS SEPARATE</small><strong>Assigned ≠ paid</strong></div><span class="focus-state">NOT RECORDED</span></div>
 
-        <section class="scene brand-scene" data-beat="5" aria-label="TaskLatch project close">
-          <div class="brand-end">
-            <div class="brand-end-mark">TL</div>
-            <div class="brand-end-kicker">A SMALL TOOL FOR A VERY REAL GAP</div>
-            <h2>Track the work.<br><em>Don’t guess.</em></h2>
-            <p>TaskLatch · personal open-source project · synthetic sample data</p>
-            <div class="brand-end-link">github.com/Shivam9864op/tasklatch-work-readiness</div>
-          </div>
-          <div class="brand-end-orbit orbit-end-one"></div>
-          <div class="brand-end-orbit orbit-end-two"></div>
-          <div class="beat-index">06 <span>/</span> 06</div>
-        </section>
-
-        <div class="product-window" id="product-window" aria-label="Working TaskLatch demo">
-          <div class="window-topline"><span class="window-light light-red"></span><span class="window-light light-amber"></span><span class="window-light light-green"></span><span class="window-title">TaskLatch / Work trail</span><span class="window-demo">FICTIONAL SAMPLE</span></div>
-          <div class="iframe-crop"><iframe id="tasklatch-demo-frame" title="Working TaskLatch synthetic sample" src="./quick-demo.html?source=motion-film" loading="eager"></iframe></div>
-          <div class="window-foot"><span><i></i> RUNNING LOCAL DEMO</span><span id="window-state">ONBOARDING RECORDED · TASK NOT ASSIGNED</span></div>
-          <div class="payment-spotlight" id="payment-spotlight"><span class="spotlight-check">✓</span><div><small>PAYMENT STATUS</small><strong>Not recorded</strong></div><span class="spotlight-arrow">↘</span></div>
+          <section class="closing" id="closing" aria-label="TaskLatch project information">
+            <div class="closing-brand"><span class="closing-mark">t</span><span>TaskLatch</span></div>
+            <div class="closing-rule"></div>
+            <h2>Know what’s done.<br><em>Know what’s next.</em></h2>
+            <p>Personal open-source project <span>·</span> Synthetic sample data</p>
+            <div class="closing-link">github.com/Shivam9864op/tasklatch-work-readiness <b>↗</b></div>
+          </section>
         </div>
+        <div class="film-grain" aria-hidden="true"></div>
       </main>
 
       <footer class="film-footer">
-        <div class="film-progress"><span id="progress-fill"></span></div>
-        <div class="footer-meta"><span id="chapter-label">01 · The waiting gap</span><span>20 SEC <i></i> MOTION CONCEPT</span></div>
+        <div class="progress-track"><span id="progress-fill"></span><i id="progress-head"></i></div>
+        <div class="footer-meta"><span id="chapter-label">A clearer work trail</span><span>60 FPS <i></i> MOTION FILM</span></div>
       </footer>
     </div>
   </body>
