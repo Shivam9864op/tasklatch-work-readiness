@@ -22,7 +22,7 @@ The quick demo focuses on one distinction: onboarding is not a task assignment, 
 
 ## Motion-design product film
 
-[Watch the 36-second TaskLatch motion film (60 fps)](media/tasklatch-motion-promo.mp4) · [Open the HTML motion storyboard](motion-promo.html) · [Read the English captions](media/tasklatch-motion-promo.en.vtt)
+[Watch the 20-second TaskLatch motion film (60 fps)](media/tasklatch-motion-promo.mp4) · [Open the HTML motion storyboard](motion-promo.html) · [Read the English captions](media/tasklatch-motion-promo.en.vtt)
 
 The film follows one idea rather than listing every feature: onboarding is not assignment, and assignment is not payment. It uses a designed motion-graphics opening and closing around the working interactive product demo. The sample task reference is triggered through the actual demo button, and the payment state remains unchanged. The 60 fps film is captured directly from the rendered animation, with no generated in-between frames. All names and records are fictional. The film is a personal motion concept, not client work.
 
@@ -74,7 +74,7 @@ node scripts/record-walkthrough.mjs
 
 The recording script uses a separate temporary browser profile, captures frames of the working local demo, encodes a subtitled MP4, and removes its temporary frames and profile. It never touches a signed-in browser session.
 
-Run node scripts/record-quick-demo.mjs to reproduce the short product clip, English captions, and cover screenshot from the working local demo. Run node scripts/record-motion-promo.mjs to capture the 36-second film directly at 60 fps and export a 1920×1080 MP4; the recorder also verifies the product-state transitions.
+Run node scripts/record-quick-demo.mjs to reproduce the short product clip, English captions, and cover screenshot from the working local demo. Run node scripts/record-motion-promo.mjs to capture the 20-second film directly at 60 fps and export a 1920×1080 MP4; the recorder also verifies the product-state transitions.
 
 ## Privacy and limitations
 

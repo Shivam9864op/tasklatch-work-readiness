@@ -39,6 +39,7 @@ if (!quickDemoHtml.includes("quick-demo.css") || !quickDemoPage.includes("assign
 const motionHtml = await readFile(join(root, "motion-promo.html"), "utf8");
 const motionScript = await readFile(join(root, "src", "motion-promo.mjs"), "utf8");
 const motionCss = await readFile(join(root, "motion-promo.css"), "utf8");
+const motionTimingCss = await readFile(join(root, "motion-promo-timing.css"), "utf8");
 const motionRecorder = await readFile(join(root, "scripts", "record-motion-promo.mjs"), "utf8");
 if (!motionHtml.includes('src="./quick-demo.html?source=motion-film"') || !motionScript.includes('querySelector("#record-sample")')) {
   errors.push("Motion promo must present and operate the working synthetic product demo.");
@@ -48,6 +49,9 @@ if (!motionScript.includes('"Task assigned"') || !motionRecorder.includes('"Not 
 }
 if (!motionRecorder.includes("const captureFps = 60") || !motionRecorder.includes("const outputFps = 60") || motionRecorder.includes("minterpolate=")) {
   errors.push("Motion promo must capture and export actual animation frames at 60 fps without synthetic interpolation.");
+}
+if (!motionHtml.includes("motion-promo-timing.css") || !motionTimingCss.includes('data-motion-mode="controlled"') || !motionScript.includes("const duration = 20")) {
+  errors.push("Motion promo must use its fast, deterministic 20-second motion timeline.");
 }
 for (const file of ["tasklatch-motion-promo.mp4", "tasklatch-motion-promo.en.vtt", "tasklatch-motion-promo-cover.png"]) {
   try {

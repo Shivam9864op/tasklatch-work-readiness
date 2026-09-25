@@ -12,14 +12,14 @@ const captionsPath = join(media, "tasklatch-motion-promo.en.vtt");
 const coverPath = join(media, "tasklatch-motion-promo-cover.png");
 const captureFps = 60;
 const outputFps = 60;
-const duration = 36;
+const duration = 20;
 const cues = [
-  [0, 5.5, "Onboarded does not mean assigned work."],
-  [5.5, 11, "Keep every work milestone and its evidence separate."],
-  [11, 18, "See the status in a simple, private-first work trail."],
-  [18, 24, "A sample task reference changes the status."],
-  [24, 30, "Assignment is not payment. Payment stays unrecorded."],
-  [30, 36, "TaskLatch. Personal open-source demo. Synthetic data."],
+  [0, 3.2, "Onboarded does not mean your first task has arrived."],
+  [3.2, 6, "Track each step with its own evidence."],
+  [6, 9.8, "Keep the whole work trail in one private workspace."],
+  [9.8, 13.2, "A task changes status only after its reference is recorded."],
+  [13.2, 16.6, "Assigned is not paid. Payment stays unrecorded."],
+  [16.6, 20, "TaskLatch. Personal project. Synthetic sample data."],
 ];
 const edgeCandidates = process.platform === "win32"
   ? [process.env.EDGE_BIN, "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe"]
@@ -217,14 +217,14 @@ async function main() {
     const cover = await send("Page.captureScreenshot", { format: "png", fromSurface: true });
     await writeFile(coverPath, Buffer.from(cover.data, "base64"));
     await evaluate("window.__taskLatchMotion.restart()");
-    await capture(18);
-    await evaluate("window.__taskLatchMotion.seek(18)");
+    await capture(10);
+    await evaluate("window.__taskLatchMotion.seek(9.8)");
     const assignedStatus = String(await evaluate("document.querySelector('#tasklatch-demo-frame').contentDocument.querySelector('#status-heading').textContent.trim()"));
     const taskReference = String(await evaluate("document.querySelector('#tasklatch-demo-frame').contentDocument.querySelector('#assignment-note').innerText"));
     if (assignedStatus !== "Task assigned" || !taskReference.includes("DEMO-TASK-17")) {
       throw new Error("The working product did not record the synthetic task assignment.");
     }
-    await capture(18);
+    await capture(10);
     const finalPayment = String(await evaluate("document.querySelector('#tasklatch-demo-frame').contentDocument.querySelector('#payment-label').textContent.trim()"));
     const finalBeat = String(await evaluate("document.body.dataset.scene"));
     if (finalPayment !== "Not recorded" || finalBeat !== "5") {
@@ -257,7 +257,7 @@ async function main() {
       encoder.once("exit", resolveExit);
     });
     if (exitCode !== 0) throw new Error("Motion-promo video encoding failed with exit code " + exitCode + ".");
-    process.stdout.write("Captured " + frameIndex + " rendered animation frames at " + captureFps + " fps and encoded the 1920x1080 film at " + outputFps + " fps.\n");
+    process.stdout.write("Captured " + frameIndex + " rendered animation frames at " + captureFps + " fps and encoded a 20-second 1920x1080 film at " + outputFps + " fps.\n");
     process.stdout.write("Verified: the real demo starts onboarded, records DEMO-TASK-17, and leaves payment not recorded.\n");
     process.stdout.write("Saved " + videoPath + "\nSaved " + captionsPath + "\nSaved " + coverPath + "\n");
   } finally {
